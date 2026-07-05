@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas WEB | A Sua Loja de Ferramentas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">🔧</span> Ferramentas WEB
+            </div>
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link active" data-target="home">Início</a>
+                <a href="#categorias" class="nav-link" data-target="categorias">Categorias</a>
+                <a href="#produtos" class="nav-link" data-target="produtos">Produtos</a>
+                <a href="#cadastro" class="nav-link" data-target="cadastro">Cadastro</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- SEÇÃO: HOME -->
+        <section id="home" class="page-section active">
+            <div class="banner">
+                <img src="imagens/home.png" alt="Banner Loja de Ferramentas" class="banner-image">
+                <div class="banner-overlay"></div>
+                <div class="banner-content">
+                    <h1>Equipe sua obra</h1>
+                    <p>Encontre as ferramentas ideais para transformar seus projetos em realidade, com qualidade e
+                        durabilidade profissional.</p>
+                    <button class="cta-button"
+                        onclick="document.querySelector('[data-target=\'produtos\']').click()">Ver Produtos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CATEGORIAS -->
+        <section id="categorias" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Nossas Categorias</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">🔨</div>
+                        <h3>Ferramentas Manuais</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">⚡</div>
+                        <h3>Elétricas</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🦺</div>
+                        <h3>EPIs</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🧱</div>
+                        <h3>Construção</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🌱</div>
+                        <h3>Jardinagem</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: PRODUTOS -->
+        <section id="produtos" class="page-section">
+            <div class="container">
+                <h2 class="section-title">Produtos em Destaque</h2>
+
+                <!-- Campo de busca (Casca Visual) -->
+                <div class="search-container">
+                    <input type="text" id="searchProduct" placeholder="Buscar produto pelo nome...">
+                    <button class="btn-primary" id="btnSearch">Buscar</button>
+                </div>
+
+                <div class="products-grid">
+
+                    <!-- Produto 1 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/furadeira.png" alt="Furadeira de Impacto" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Elétricas</span>
+                            <h3 class="product-name">Furadeira de Impacto 700W</h3>
+                            <p class="product-desc">Furadeira profissional de alta performance com maleta e acessórios.
+                            </p>
+                            <div class="product-bottom">
+                                <span class="product-price">R$ 299,90</span>
+                                <div class="product-card-buttons">
+                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
+                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Produto 2 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/chave.png" alt="Kit de Chaves" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Ferramentas Manuais</span>
+                            <h3 class="product-name">Kit de Chaves 100 Peças</h3>
+                            <p class="product-desc">Conjunto completo de chaves de fenda, philips e precisão.</p>
+                            <div class="product-bottom">
+                                <span class="product-price">R$ 149,50</span>
+                                <div class="product-card-buttons">
+                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
+                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Produto 3 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/capacete.png" alt="Capacete de Segurança" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">EPIs</span>
+                            <h3 class="product-name">Capacete de Segurança</h3>
+                            <p class="product-desc">Capacete de proteção classe B com carneira ajustável.</p>
+                            <div class="product-bottom">
+                                <span class="product-price">R$ 35,00</span>
+                                <div class="product-card-buttons">
+                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
+                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Produto 4 -->
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="imagens/serra-circular.png" alt="Serra Circular" class="product-image">
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category">Elétricas</span>
+                            <h3 class="product-name">Serra Circular 1400W</h3>
+                            <p class="product-desc">Serra circular para madeira com disco de corte rápido.</p>
+                            <div class="product-bottom">
+                                <span class="product-price">R$ 450,00</span>
+                                <div class="product-card-buttons">
+                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
+                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CADASTRO DE PRODUTO -->
+        <section id="cadastro" class="page-section">
+            <div class="container">
+                <div class="cadastro-wrapper">
+                    <div class="cadastro-form-container">
+                        <h2 class="section-title text-left">Cadastrar Novo Produto</h2>
+                        <p class="cadastro-subtitle">Adicione um novo item ao catálogo.</p>
+
+                        <form id="productForm" class="custom-form" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <label for="prodName">Nome do Produto</label>
+                                <input type="text" id="prodName" placeholder="Ex: Disco de corte 25mm" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="prodPrice">Preço (R$)</label>
+                                    <input type="number" id="prodPrice" placeholder="0.00" step="0.01" required>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="prodCategory">Categoria</label>
+                                    <select id="prodCategory" required>
+                                        <option value="Manuais">Ferramentas Manuais</option>
+                                        <option value="Eletricas">Elétricas</option>
+                                        <option value="EPIs">EPIs</option>
+                                        <option value="Construcao">Construção</option>
+                                        <option value="Jardinagem">Jardinagem</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prodDesc">Descrição Curta</label>
+                                <textarea id="prodDesc" rows="3" placeholder="Detalhes do produto..."
+                                    required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary full-width" id="btnAddProduct">Adicionar
+                                Produto</button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>🔧 Ferramentas WEB</h3>
+                <p>O seu parceiro de obras e reformas.</p>
+            </div>
+            <div class="footer-academic">
+                <p>Projeto Acadêmico - Front-End</p>
+                <p>&copy; 2026 - Desenvolvido por Matheus Lopes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
