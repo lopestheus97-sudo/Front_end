@@ -28,10 +28,10 @@ Você deve baixar os arquivos do projeto para o seu computador. Caso utilize Git
 
 ```bash
 # Clone o repositório
-git clone https://github.com/lopestheus97-sudo/catalogo-ferramentas.git
+git clone https://github.com/lopestheus97-sudo/Front_end.git
 
 # Acesse o diretório do projeto
-cd catalogo-ferramentas
+cd Front_end
 ```
 *(Se você fez o download do arquivo .ZIP, basta extraí-lo em uma pasta da sua preferência).*
 
