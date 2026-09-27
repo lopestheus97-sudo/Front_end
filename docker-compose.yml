@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # 1. Interface Web (Componente Principal)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ferramentas-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  # 2. API REST Flask (Serviço Secundário)
+  backend:
+    build:
+      context: ../Back_end
+      dockerfile: Dockerfile
+    container_name: ferramentas-api
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1

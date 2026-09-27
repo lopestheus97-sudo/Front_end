@@ -4,235 +4,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferramentas WEB | A Sua Loja de Ferramentas</title>
+    <title>Ferramentas WEB | Catálogo e Gestão de Ferramentas</title>
+    <meta name="description" content="Sistema de catálogo e gestão de ferramentas profissionais com integração REST Flask e serviço externo ViaCEP.">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Header -->
+    <!-- Header / Barra de Navegação -->
     <header class="header">
         <div class="header-container">
-            <div class="logo">
-                <span class="logo-icon">🔧</span> Ferramentas WEB
+            <div class="logo-wrapper">
+                <div class="logo">
+                    <span class="logo-icon">🔧</span> Ferramentas WEB
+                </div>
+                <!-- Status da Conexão com o Back-End -->
+                <div class="api-status-badge" id="apiStatusBadge" title="Status da comunicação com a API Flask">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Verificando API...</span>
+                </div>
             </div>
-            <nav class="nav-menu">
+
+            <nav class="nav-menu" id="navMenu">
                 <a href="#home" class="nav-link active" data-target="home">Início</a>
                 <a href="#categorias" class="nav-link" data-target="categorias">Categorias</a>
                 <a href="#produtos" class="nav-link" data-target="produtos">Produtos</a>
-                <a href="#cadastro" class="nav-link" data-target="cadastro">Cadastro</a>
+                <a href="#cadastro" class="nav-link" data-target="cadastro">Cadastrar (POST)</a>
+                <a href="#frete" class="nav-link" data-target="frete">Frete (ViaCEP)</a>
             </nav>
-            <div class="mobile-menu-btn">
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu de navegação">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </header>
 
     <main class="main-content">
 
-        <!-- SEÇÃO: HOME -->
+        <!-- SEÇÃO 1: HOME / BANNER -->
         <section id="home" class="page-section active">
             <div class="banner">
                 <img src="imagens/home.png" alt="Banner Loja de Ferramentas" class="banner-image">
                 <div class="banner-overlay"></div>
                 <div class="banner-content">
-                    <h1>Equipe sua obra</h1>
-                    <p>Encontre as ferramentas ideais para transformar seus projetos em realidade, com qualidade e
-                        durabilidade profissional.</p>
-                    <button class="cta-button"
-                        onclick="document.querySelector('[data-target=\'produtos\']').click()">Ver Produtos</button>
+                    <h1>Equipe sua obra com qualidade profissional</h1>
+                    <p>Catálogo inteligente com persistência SQLite, consumo de serviços autônomos e integração em tempo real com a API ViaCEP.</p>
+                    <div class="banner-actions">
+                        <button class="cta-button" onclick="navigateToSection('produtos')">Ver Catálogo de Produtos</button>
+                        <button class="cta-button secondary" onclick="navigateToSection('frete')">Simular Frete (ViaCEP)</button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO: CATEGORIAS -->
+        <!-- SEÇÃO 2: CATEGORIAS -->
         <section id="categorias" class="page-section">
             <div class="container">
-                <h2 class="section-title">Nossas Categorias</h2>
+                <h2 class="section-title">Categorias de Ferramentas</h2>
                 <div class="categories-grid">
-                    <div class="category-card">
+                    <div class="category-card" onclick="filterByCategory('Ferramentas Manuais')">
                         <div class="category-icon">🔨</div>
                         <h3>Ferramentas Manuais</h3>
+                        <p>Martelos, chaves, alicates e jogos completos.</p>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="filterByCategory('Elétricas')">
                         <div class="category-icon">⚡</div>
                         <h3>Elétricas</h3>
+                        <p>Furadeiras, serras, lixadeiras e esmerilhadeiras.</p>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="filterByCategory('EPIs')">
                         <div class="category-icon">🦺</div>
                         <h3>EPIs</h3>
+                        <p>Capacetes, luvas, óculos de segurança e protetores.</p>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="filterByCategory('Construção')">
                         <div class="category-icon">🧱</div>
                         <h3>Construção</h3>
+                        <p>Trenas, níveis, desempenadeiras e prumos.</p>
                     </div>
-                    <div class="category-card">
+                    <div class="category-card" onclick="filterByCategory('Jardinagem')">
                         <div class="category-icon">🌱</div>
                         <h3>Jardinagem</h3>
+                        <p>Tesouras de poda, pás, mangueiras e roçadeiras.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO: PRODUTOS -->
+        <!-- SEÇÃO 3: PRODUTOS (CONSUMO GET, BUSCA, EDIÇÃO PUT E EXCLUSÃO DELETE) -->
         <section id="produtos" class="page-section">
             <div class="container">
-                <h2 class="section-title">Produtos em Destaque</h2>
-
-                <!-- Campo de busca (Casca Visual) -->
-                <div class="search-container">
-                    <input type="text" id="searchProduct" placeholder="Buscar produto pelo nome...">
-                    <button class="btn-primary" id="btnSearch">Buscar</button>
+                <div class="section-header-row">
+                    <div>
+                        <h2 class="section-title text-left">Catálogo de Produtos</h2>
+                        <p class="section-subtitle">Sincronizado dinamicamente via <code>GET /api/produtos</code> com o banco SQLite.</p>
+                    </div>
+                    <div class="header-action-buttons">
+                        <button class="btn-refresh" id="btnReloadProducts" title="Recarregar produtos da API">🔄 Atualizar Lista</button>
+                        <button class="btn-primary" onclick="navigateToSection('cadastro')">+ Novo Produto</button>
+                    </div>
                 </div>
 
-                <div class="products-grid">
-
-                    <!-- Produto 1 -->
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="imagens/furadeira.png" alt="Furadeira de Impacto" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <span class="product-category">Elétricas</span>
-                            <h3 class="product-name">Furadeira de Impacto 700W</h3>
-                            <p class="product-desc">Furadeira profissional de alta performance com maleta e acessórios.
-                            </p>
-                            <div class="product-bottom">
-                                <span class="product-price">R$ 299,90</span>
-                                <div class="product-card-buttons">
-                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
-                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Barra de Busca e Filtros -->
+                <div class="search-filter-bar">
+                    <div class="search-container">
+                        <input type="text" id="searchProduct" placeholder="Buscar produto por nome (GET /api/produtos/busca)...">
+                        <button class="btn-primary" id="btnSearch">Buscar</button>
+                        <button class="btn-clear" id="btnClearSearch" title="Limpar busca">✖</button>
                     </div>
-
-                    <!-- Produto 2 -->
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="imagens/chave.png" alt="Kit de Chaves" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <span class="product-category">Ferramentas Manuais</span>
-                            <h3 class="product-name">Kit de Chaves 100 Peças</h3>
-                            <p class="product-desc">Conjunto completo de chaves de fenda, philips e precisão.</p>
-                            <div class="product-bottom">
-                                <span class="product-price">R$ 149,50</span>
-                                <div class="product-card-buttons">
-                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
-                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="category-filter-chips" id="categoryChips">
+                        <button class="chip active" data-category="TODAS">Todas</button>
+                        <button class="chip" data-category="Ferramentas Manuais">Manuais</button>
+                        <button class="chip" data-category="Elétricas">Elétricas</button>
+                        <button class="chip" data-category="EPIs">EPIs</button>
+                        <button class="chip" data-category="Construção">Construção</button>
+                        <button class="chip" data-category="Jardinagem">Jardinagem</button>
                     </div>
+                </div>
 
-                    <!-- Produto 3 -->
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="imagens/capacete.png" alt="Capacete de Segurança" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <span class="product-category">EPIs</span>
-                            <h3 class="product-name">Capacete de Segurança</h3>
-                            <p class="product-desc">Capacete de proteção classe B com carneira ajustável.</p>
-                            <div class="product-bottom">
-                                <span class="product-price">R$ 35,00</span>
-                                <div class="product-card-buttons">
-                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
-                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Grid onde os produtos da API serão renderizados -->
+                <div class="products-grid" id="productsGrid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Carregando ferramentas do banco de dados...</p>
                     </div>
-
-                    <!-- Produto 4 -->
-                    <div class="product-card">
-                        <div class="product-image-container">
-                            <img src="imagens/serra-circular.png" alt="Serra Circular" class="product-image">
-                        </div>
-                        <div class="product-info">
-                            <span class="product-category">Elétricas</span>
-                            <h3 class="product-name">Serra Circular 1400W</h3>
-                            <p class="product-desc">Serra circular para madeira com disco de corte rápido.</p>
-                            <div class="product-bottom">
-                                <span class="product-price">R$ 450,00</span>
-                                <div class="product-card-buttons">
-                                    <button class="btn-action edit-btn" title="Editar">✏️</button>
-                                    <button class="btn-action delete-btn" title="Remover">🗑️</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO: CADASTRO DE PRODUTO -->
+        <!-- SEÇÃO 4: CADASTRO DE PRODUTO (POST /api/produtos) -->
         <section id="cadastro" class="page-section">
             <div class="container">
                 <div class="cadastro-wrapper">
                     <div class="cadastro-form-container">
                         <h2 class="section-title text-left">Cadastrar Novo Produto</h2>
-                        <p class="cadastro-subtitle">Adicione um novo item ao catálogo.</p>
+                        <p class="cadastro-subtitle">Envia os dados em formato JSON através do método <code>POST /api/produtos</code>.</p>
 
-                        <form id="productForm" class="custom-form" onsubmit="event.preventDefault();">
+                        <form id="productForm" class="custom-form">
                             <div class="form-group">
-                                <label for="prodName">Nome do Produto</label>
-                                <input type="text" id="prodName" placeholder="Ex: Disco de corte 25mm" required>
+                                <label for="prodName">Nome do Produto *</label>
+                                <input type="text" id="prodName" placeholder="Ex: Parafusadeira Bateria 12V" required>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group half">
-                                    <label for="prodPrice">Preço (R$)</label>
-                                    <input type="number" id="prodPrice" placeholder="0.00" step="0.01" required>
+                                    <label for="prodPrice">Preço (R$) *</label>
+                                    <input type="number" id="prodPrice" placeholder="Ex: 189.90" step="0.01" min="0" required>
                                 </div>
                                 <div class="form-group half">
-                                    <label for="prodCategory">Categoria</label>
+                                    <label for="prodCategory">Categoria *</label>
                                     <select id="prodCategory" required>
-                                        <option value="Manuais">Ferramentas Manuais</option>
-                                        <option value="Eletricas">Elétricas</option>
+                                        <option value="" disabled selected>Selecione uma categoria...</option>
+                                        <option value="Ferramentas Manuais">Ferramentas Manuais</option>
+                                        <option value="Elétricas">Elétricas</option>
                                         <option value="EPIs">EPIs</option>
-                                        <option value="Construcao">Construção</option>
+                                        <option value="Construção">Construção</option>
                                         <option value="Jardinagem">Jardinagem</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="prodDesc">Descrição Curta</label>
-                                <textarea id="prodDesc" rows="3" placeholder="Detalhes do produto..."
-                                    required></textarea>
+                                <label for="prodDesc">Descrição do Produto</label>
+                                <textarea id="prodDesc" rows="3" placeholder="Informações técnicas, voltagem, material ou detalhes..."></textarea>
                             </div>
 
-                            <button type="submit" class="btn-primary full-width" id="btnAddProduct">Adicionar
-                                Produto</button>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary full-width" id="btnAddProduct">
+                                    Cadastrar Ferramenta na API (POST)
+                                </button>
+                            </div>
                         </form>
                     </div>
 
+                    <div class="cadastro-info-card">
+                        <h3>ℹ️ Sobre a Persistência</h3>
+                        <p>Ao clicar em cadastrar, a requisição HTTP enviará o corpo em JSON para a rota <code>/api/produtos</code> do back-end Flask.</p>
+                        <p>O registro é gravado com data/hora automática no banco de dados SQLite (<code>database.db</code>) e imediatamente refletido na aba de produtos.</p>
+                        <div class="info-badge-feature">
+                            <span>✅ Validação de dados</span>
+                            <span>✅ Preço não-negativo</span>
+                            <span>✅ Timestamp de criação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- SEÇÃO 5: API EXTERNA - CÁLCULO DE FRETE E ENDEREÇO (VIACEP) -->
+        <section id="frete" class="page-section">
+            <div class="container">
+                <div class="section-header-row">
+                    <div>
+                        <h2 class="section-title text-left">Cálculo de Frete & Endereço</h2>
+                        <p class="section-subtitle">Componente externo autônomo consumido via <strong>ViaCEP API Pública</strong>.</p>
+                    </div>
+                    <span class="external-api-badge">🌐 Serviço Externo Autônomo</span>
+                </div>
+
+                <div class="frete-wrapper">
+                    <div class="frete-card">
+                        <div class="frete-card-header">
+                            <div class="frete-icon">🚚</div>
+                            <div>
+                                <h3>Simulador de Frete e Localização de Entrega</h3>
+                                <p>Consome a API pública <code>https://viacep.com.br/ws/{cep}/json/</code> sem redirecionamento, tratando os dados diretamente na interface.</p>
+                            </div>
+                        </div>
+
+                        <form id="freteForm" class="frete-form" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <label for="cepInput">Digite o CEP de Destino:</label>
+                                <div class="cep-input-group">
+                                    <input type="text" id="cepInput" placeholder="Ex: 01001-000 ou 20040-002" maxlength="9" required>
+                                    <button type="submit" class="btn-primary" id="btnConsultarCep">Calcular Frete</button>
+                                    <button type="button" class="btn-secondary" id="btnExemploCep" title="Preencher CEP de exemplo">Usar Exemplo</button>
+                                </div>
+                                <small class="help-text">Formato: 8 dígitos numéricos (com ou sem hífen).</small>
+                            </div>
+                        </form>
+
+                        <!-- Box de Resultados do ViaCEP -->
+                        <div id="freteResult" class="frete-result-container hidden">
+                            <!-- Inserido dinamicamente via script.js -->
+                        </div>
+                    </div>
+
+                    <!-- Card Informativo sobre a API Externa -->
+                    <div class="frete-info-panel">
+                        <h4>📋 Ficha Técnica da API Externa</h4>
+                        <ul class="api-info-list">
+                            <li><strong>Nome do Serviço:</strong> ViaCEP WebService</li>
+                            <li><strong>URL Base:</strong> <code>https://viacep.com.br/ws/</code></li>
+                            <li><strong>Licença:</strong> Livre, gratuita e de acesso público</li>
+                            <li><strong>Autenticação:</strong> Não requer cadastro nem chave de API (Tokenless)</li>
+                            <li><strong>Método / Rota:</strong> <code>GET /{cep}/json/</code></li>
+                            <li><strong>Tratamento na Aplicação:</strong> Os dados retornados (logradouro, bairro, localidade, UF, DDD) são processados pelo JavaScript da interface e utilizados para simular prazos e taxas de entrega por região de forma 100% autônoma.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- MODAL DE EDIÇÃO DE PRODUTO (MÉTODO PUT) -->
+    <div id="editModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>✏️ Editar Produto (Método PUT)</h3>
+                <button class="modal-close" id="btnCloseModal" title="Fechar">&times;</button>
+            </div>
+            <form id="editProductForm" class="custom-form">
+                <input type="hidden" id="editProdId">
+
+                <div class="form-group">
+                    <label for="editProdName">Nome da Ferramenta *</label>
+                    <input type="text" id="editProdName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="editProdPrice">Preço (R$) *</label>
+                        <input type="number" id="editProdPrice" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="editProdCategory">Categoria *</label>
+                        <select id="editProdCategory" required>
+                            <option value="Ferramentas Manuais">Ferramentas Manuais</option>
+                            <option value="Elétricas">Elétricas</option>
+                            <option value="EPIs">EPIs</option>
+                            <option value="Construção">Construção</option>
+                            <option value="Jardinagem">Jardinagem</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdDesc">Descrição Detalhada</label>
+                    <textarea id="editProdDesc" rows="3" required></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="btnCancelEdit">Cancelar</button>
+                    <button type="submit" class="btn-primary" id="btnSaveEdit">Salvar Alterações (PUT /api/produtos/:id)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Container de Notificações Toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <!-- Rodapé -->
     <footer class="footer">
         <div class="container footer-content">
             <div class="footer-brand">
                 <h3>🔧 Ferramentas WEB</h3>
-                <p>O seu parceiro de obras e reformas.</p>
+                <p>MVP – Componentização e Serviços Autônomos.</p>
             </div>
             <div class="footer-academic">
-                <p>Projeto Acadêmico - Front-End</p>
+                <p><strong>Cenário 1:</strong> Interface (Front-End) + API (Back-End Flask) + API Externa (ViaCEP)</p>
                 <p>&copy; 2026 - Desenvolvido por Matheus Lopes.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Script de Lógica e Comunicação REST -->
     <script src="script.js"></script>
 </body>
 

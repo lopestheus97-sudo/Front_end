@@ -574,14 +574,619 @@ ul {
     background-color: var(--color-gray);
     color: var(--color-white);
     border: none;
-    padding: 15px;
+    padding: 12px 20px;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition-fast);
-    font-size: 1.1rem;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .btn-secondary:hover {
     background-color: #555;
 }
+
+/* =========================================
+   STATUS DA API NO HEADER
+   ========================================= */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.api-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all var(--transition-fast);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #e6c200;
+    box-shadow: 0 0 8px #e6c200;
+    display: inline-block;
+    animation: pulse 1.8s infinite;
+}
+
+.api-status-badge.online {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+.api-status-badge.online .status-dot {
+    background-color: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+}
+
+.api-status-badge.offline {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #ff6b6b;
+    border-color: rgba(231, 76, 60, 0.3);
+}
+
+.api-status-badge.offline .status-dot {
+    background-color: #ff6b6b;
+    box-shadow: 0 0 8px #ff6b6b;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* =========================================
+   BANNER ACTIONS
+   ========================================= */
+.banner-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+}
+
+.cta-button.secondary:hover {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+}
+
+/* =========================================
+   CABEÇALHO DE SEÇÕES E FILTROS
+   ========================================= */
+.section-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: -1.5rem;
+}
+
+.header-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-refresh {
+    background-color: var(--color-white);
+    border: 1px solid #ddd;
+    color: var(--color-dark);
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-refresh:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+.search-filter-bar {
+    margin-bottom: 2.5rem;
+}
+
+.btn-clear {
+    background: #e0e0e0;
+    border: none;
+    padding: 0 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #555;
+    transition: var(--transition-fast);
+}
+
+.btn-clear:hover {
+    background: #ccc;
+    color: #222;
+}
+
+.category-filter-chips {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.chip {
+    background-color: var(--color-white);
+    border: 1px solid #ddd;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-main);
+}
+
+.chip:hover, .chip.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-darker);
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+/* =========================================
+   SPINNER E ESTADO DE LOADING
+   ========================================= */
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.product-meta-date {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 6px;
+}
+
+/* =========================================
+   SEÇÃO FRETE E VIACEP
+   ========================================= */
+.external-api-badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #0984e3, #00cec9);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(9, 132, 227, 0.25);
+}
+
+.frete-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    margin-top: 1rem;
+}
+
+.frete-card {
+    background-color: var(--color-white);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #eaeaea;
+}
+
+.frete-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.frete-icon {
+    font-size: 2.5rem;
+    background: #fff9db;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.cep-input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.cep-input-group input {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    letter-spacing: 1px;
+}
+
+.cep-input-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.25);
+}
+
+.help-text {
+    display: block;
+    color: #888;
+    margin-top: 6px;
+    font-size: 0.85rem;
+}
+
+.frete-result-container {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px dashed #eee;
+    animation: fadeIn 0.4s ease;
+}
+
+.frete-address-box {
+    background: #f8f9fa;
+    border-left: 4px solid var(--color-primary);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 20px;
+}
+
+.frete-address-box h4 {
+    color: var(--color-dark);
+    margin-bottom: 6px;
+}
+
+.frete-address-box p {
+    color: #555;
+    font-size: 0.95rem;
+    margin: 2px 0;
+}
+
+.shipping-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.shipping-option-card {
+    border: 2px solid #e9ecef;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    transition: all var(--transition-fast);
+}
+
+.shipping-option-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.shipping-option-card.featured {
+    border-color: #2ecc71;
+    background: #fafffa;
+}
+
+.shipping-option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.shipping-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.shipping-badge.fast { background: #e3f2fd; color: #1976d2; }
+.shipping-badge.eco { background: #e8f5e9; color: #388e3c; }
+
+.shipping-price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--color-dark);
+}
+
+.shipping-deadline {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.frete-info-panel {
+    background: #1e272e;
+    color: #ecf0f1;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.frete-info-panel h4 {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.api-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.api-info-list li {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #bdc3c7;
+}
+
+.api-info-list li strong {
+    color: #fff;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.api-info-list code {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+}
+
+/* =========================================
+   CADASTRO EXTRA INFO
+   ========================================= */
+.cadastro-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+}
+
+.cadastro-info-card {
+    background: var(--color-white);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #eaeaea;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cadastro-info-card h3 {
+    margin-bottom: 15px;
+    color: var(--color-dark);
+}
+
+.cadastro-info-card p {
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.info-badge-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* =========================================
+   MODAL DE EDIÇÃO (PUT)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    transition: opacity var(--transition-fast);
+}
+
+.modal-overlay.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-card {
+    background: var(--color-white);
+    width: 90%;
+    max-width: 580px;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    animation: modalSlideUp 0.3s ease;
+    border-top: 5px solid var(--color-primary);
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.modal-header h3 {
+    font-size: 1.4rem;
+    color: var(--color-dark);
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: #ff4d4d;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* =========================================
+   SISTEMA DE TOASTS
+   ========================================= */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 3000;
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    min-width: 300px;
+    max-width: 420px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.success {
+    background: #27ae60;
+    border-left: 6px solid #1e8449;
+}
+
+.toast.error {
+    background: #e74c3c;
+    border-left: 6px solid #c0392b;
+}
+
+.toast.info {
+    background: #2980b9;
+    border-left: 6px solid #1f618d;
+}
+
+@keyframes toastIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* =========================================
+   RESPONSIVIDADE EXTRA
+   ========================================= */
+@media (max-width: 900px) {
+    .frete-wrapper,
+    .cadastro-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .shipping-options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
